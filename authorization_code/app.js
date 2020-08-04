@@ -9,13 +9,14 @@
 
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
+require("dotenv");
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+var client_id = "5faa67c1df8d44f5ba10b001e724ad6a" // Your client id
+var client_secret = "5a42bbb8582a4168b25772a560e924d0" // Your secret
+var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -46,7 +47,10 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email';
+  var scope = 'user-read-private user-read-email user-modify-playback-state user-read-playback-state ' +
+              'user-read-currently-playing user-top-read user-read-recently-played user-library-modify ' +
+              'user-library-read user-follow-modify user-follow-read playlist-read-private streaming ' +
+              'playlist-modify-public playlist-modify-private playlist-read-collaborative app-remote-control';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -104,13 +108,13 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
+        res.redirect('http://localhost:3000/#' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
           }));
       } else {
-        res.redirect('/#' +
+        res.redirect('http://localhost:3000/login' +
           querystring.stringify({
             error: 'invalid_token'
           }));
