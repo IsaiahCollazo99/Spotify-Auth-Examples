@@ -16,7 +16,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = "5faa67c1df8d44f5ba10b001e724ad6a" // Your client id
 var client_secret = "5a42bbb8582a4168b25772a560e924d0" // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var redirect_uri = 'https://my-spotify-app-backend.herokuapp.com/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
